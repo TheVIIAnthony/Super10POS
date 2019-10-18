@@ -1,0 +1,21 @@
+create table usuarios(
+idUsuario int auto_increment,
+nombreUsuario varchar(10) not null,
+contraseña varchar(25) not null,
+nivelPrivilegio varchar(15) not null,
+primary key (idUsuario)
+);
+
+create table productos(
+idProducto int auto_increment,
+nombreProducto varchar(20) not null,
+marcaProducto varchar(20) not null,
+precioProducto float not null,
+costoProducto float not null,
+presentacion varchar(10) not null,
+primary key(idProducto)
+);
+
+
+<
+>
