@@ -12,10 +12,32 @@ nombreProducto varchar(20) not null,
 marcaProducto varchar(20) not null,
 precioProducto float not null,
 costoProducto float not null,
-presentacion varchar(10) not null,
+presentacion varchar(25) not null,
+cantidad int not null,
 primary key(idProducto)
 );
 
+//no se ejecuta sino que se crea dentro del programa por cada alta de deudor
+create table acreedorNombre(
+productoDeuda varchar(20) not null,
+costoProducto int not null
+);
+
+create table ventas(
+idVenta int auto_increment,
+nombreProducto varchar(20) not null,
+precioProducto float not null,
+cantidad int not null,
+subtotal float not null,
+fecha date not null,
+primary key(idVenta)
+);
+
+create table deudor(
+idDeudor int auto_incremnt,
+nombreDeudor varchar(20) not null,
+primary key(idDeudor)
+);
 
 <
 >
