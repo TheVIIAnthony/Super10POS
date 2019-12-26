@@ -148,6 +148,7 @@ public class LogIn extends javax.swing.JFrame {
                         break;
                 }     
                 }
+                con.close();
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(rootPane, e);
             }   

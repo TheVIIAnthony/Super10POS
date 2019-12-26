@@ -18,15 +18,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-
 /**
  *
  * @author Usuario
  */
 public class PrincipalAdmin extends javax.swing.JFrame {
-    Connection con = getConnection();
+
     float Total;
     DefaultTableModel modelo;
+
     /**
      * Creates new form PrincipalAdmin
      */
@@ -55,129 +55,131 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         validarSoloNumeros(cantcamp);
         validarSoloNumeros(costprod);
     }
-    
+
     /*
     * Este metodo sirve para llenar un combobox desde la BD
-    */    
-    public void llenarCombo(JComboBox cbo, int columna){
+     */
+    public void llenarCombo(JComboBox cbo, int columna) {
         Connection con = getConnection();
         PreparedStatement ps;
         ResultSet rs;
-        try 
-        {
+        try {
             cbo.removeAllItems();
             String sql = "SELECT nombreUsuario FROM usuarios";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 cbo.addItem(rs.getString(columna));
             }
-            rs.close();
-            ps.close();
-        } 
-        catch (Exception e) 
-        {
+            con.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     /*
     * fin del metodo
-    */    
-    
-    /*
+     */
+
+ /*
     * Este metodo sirve para la busqueda filtrada de los usuarios
-    */    
-    public void filtrarDatosUsuarios(String valor){
-        String[] titulos = {"Nombre","Nivel de Privilegio"};
-         String[] registros = new String[2];
-         DefaultTableModel modelo = new DefaultTableModel(null, titulos);
-         String sql = "select * from usuarios where nombreUsuario like '%"+valor+"%' ";
-         try{
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery();
-             while(rs.next()){
-                 registros[0] = rs.getString("nombreUsuario");
-                 registros[1] = rs.getString("nivelPrivilegio");
-                 modelo.addRow(registros);
-             }
-             TablaUsuarios.setModel(modelo);
-         }catch(SQLException ex){
-             JOptionPane.showMessageDialog(null, "Error de Busqueda" + ex.getMessage());
-         }
+     */
+    public void filtrarDatosUsuarios(String valor) {
+        Connection con = getConnection();
+        String[] titulos = {"Nombre", "Nivel de Privilegio"};
+        String[] registros = new String[2];
+        DefaultTableModel modelo = new DefaultTableModel(null, titulos);
+        String sql = "select * from usuarios where nombreUsuario like '%" + valor + "%' ";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                registros[0] = rs.getString("nombreUsuario");
+                registros[1] = rs.getString("nivelPrivilegio");
+                modelo.addRow(registros);
+            }
+            TablaUsuarios.setModel(modelo);
+            con.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error de Busqueda" + ex.getMessage());
+        }
     }
+
     /*
     * fin del metodo
-    */ 
-    
-    
-    /*
+     */
+
+ /*
     * Este metodo sirve para mostrar todos los usuarios actuales al abrir la ventana
-    */    
-    void mostrarTablaUsuarios(){
+     */
+    void mostrarTablaUsuarios() {
+        Connection con = getConnection();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Nombre");
         modelo.addColumn("Nivel de Privilegio");
         String sql = "SELECT * FROM usuarios";
         String datos[] = new String[2];
         PreparedStatement pt;
-        try{
+        try {
             pt = con.prepareStatement(sql);
             ResultSet rs = pt.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 datos[0] = rs.getString(2);
                 datos[1] = rs.getString(4);
                 modelo.addRow(datos);
             }
             TablaUsuarios.setModel(modelo);
-        }catch(Exception e){
-            
+            con.close();
+        } catch (Exception e) {
+
         }
     }
+
     /*
     * fin del metodo
-    */
-    
-    
-    /*
+     */
+
+ /*
     * Este metodo sirve para que solo se puedan ingresar letras en los campos
-    */
-    public void validarSoloLetras(JTextField campo){
-        campo.addKeyListener(new KeyAdapter(){
-        public void keyTyped(KeyEvent e){
-            char c = e.getKeyChar();
-            if(!Character.isLetter(c)){
-                e.consume();
+     */
+    public void validarSoloLetras(JTextField campo) {
+        campo.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isLetter(c)) {
+                    e.consume();
+                }
             }
-        }
-    });
+        });
     }
+
     /*
     * fin del metodo
-    */
-    
-    
-    /*
+     */
+
+ /*
     * Este metodo sirve para que solo se puedan ingresar numeros en los campos
-    */
-    public void validarSoloNumeros(JTextField campo){
-        campo.addKeyListener(new KeyAdapter(){
-        public void keyTyped(KeyEvent e){
-            char c = e.getKeyChar();
-            if(!Character.isDigit(c)){
-                e.consume();
+     */
+    public void validarSoloNumeros(JTextField campo) {
+        campo.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
             }
-        }
-    });
+        });
     }
+
     /*
     * fin del metodo
-    */
-    
-    /*
+     */
+
+ /*
     * Este metodo sirve para mostrar todos los productos actuales en el inventario al abrir la ventana
-    */
-    void mostrarTablaInventario(){
+     */
+    void mostrarTablaInventario() {
+        Connection con = getConnection();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Nombre");
         modelo.addColumn("Marca");
@@ -186,13 +188,13 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         modelo.addColumn("Presentación");
         modelo.addColumn("Cantidad");
         String sql = "SELECT * FROM productos";
-        
+
         String datos[] = new String[6];
         PreparedStatement pt;
-        try{
+        try {
             pt = con.prepareStatement(sql);
             ResultSet rs = pt.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 datos[0] = rs.getString(2);
                 datos[1] = rs.getString(3);
                 datos[2] = rs.getString(4);
@@ -202,31 +204,34 @@ public class PrincipalAdmin extends javax.swing.JFrame {
                 modelo.addRow(datos);
             }
             tablaMenuInventario.setModel(modelo);
-        }catch(Exception e){
-            
+            con.close();
+        } catch (Exception e) {
+
         }
     }
+
     /*
     * fin del metodo
-    */
-    
-    /*
+     */
+
+ /*
     * Este metodo sirve para mostrar todos los productos actuales en el inventario al abrir la ventana
-    */
-    public void mostrarTablaVenta(){
+     */
+    public void mostrarTablaVenta() {
+        Connection con = getConnection();
         DefaultTableModel modelo2 = new DefaultTableModel();
         modelo2.addColumn("Nombre");
         modelo2.addColumn("Marca");
         modelo2.addColumn("Precio");
         modelo2.addColumn("Presentación");
         String sql = "SELECT * FROM productos";
-        
+
         String datos[] = new String[4];
         PreparedStatement pt;
-        try{
+        try {
             pt = con.prepareStatement(sql);
             ResultSet rs = pt.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 datos[0] = rs.getString(2);
                 datos[1] = rs.getString(3);
                 datos[2] = rs.getString(4);
@@ -234,110 +239,108 @@ public class PrincipalAdmin extends javax.swing.JFrame {
                 modelo2.addRow(datos);
             }
             tablaBusqueda.setModel(modelo2);
-        }catch(Exception e){
-            
+            con.close();
+        } catch (Exception e) {
+
         }
     }
+
     /*
     * fin del metodo
-    */
-    
-    /*
+     */
+
+ /*
     * Este metodo hace un calculo del total actual de los productos en lista y lo muestra
-    */
-    public int calcularTotal(){
+     */
+    public int calcularTotal() {
         float stotal, total = 0;
-        if(tablaVentas.getRowCount() > 0){
-            for(int i = 0; i < tablaVentas.getRowCount(); i++){
-                stotal = Float.parseFloat(tablaVentas.getValueAt(i, 3).toString());    
+        if (tablaVentas.getRowCount() > 0) {
+            for (int i = 0; i < tablaVentas.getRowCount(); i++) {
+                stotal = Float.parseFloat(tablaVentas.getValueAt(i, 3).toString());
                 total = total + stotal;
-                valorTotal.setText(""+ total);
-            }    
+                valorTotal.setText("" + total);
+            }
         }
         return (int) total;
     }
-    
+
     /*
     * fin del metodo
-    */
-    
-    
-    /*
+     */
+ /*
     * Este metodo vacia la tabla ventas
-    */
-    void vaciarTablaVentas(){
+     */
+    void vaciarTablaVentas() {
         int filas = tablaVentas.getRowCount();
-        for(int i= filas-1; i>=0; i--){
+        for (int i = filas - 1; i >= 0; i--) {
             modelo.removeRow(i);
         }
     }
-    
+
     /*
     * fin de metodo
-    */
-    
-    
-    /*
+     */
+ /*
     * Este metodo realiza la busqueda filtrada en la ventana de inventario
-    */ 
-    public void filtrarDatosInventario(String valor){
-        String[] titulos = {"Nombre","Marca","Precio", "Costo" , "Presentación", "Cantidad"};
-         String[] registros = new String[6];
-         DefaultTableModel modelo = new DefaultTableModel(null, titulos);
-         String sql = "select * from productos where nombreProducto like '%"+valor+"%' ";
-         try{
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery();
-             while(rs.next()){
-                 registros[0] = rs.getString("nombreProducto");
-                 registros[1] = rs.getString("marcaProducto");
-                 registros[2] = rs.getString("precioProducto");
-                 registros[3] = rs.getString("costoProducto");
-                 registros[4] = rs.getString("presentacion");
-                 registros[5] = rs.getString("cantidad");
-                 modelo.addRow(registros);
-             }
-             tablaMenuInventario.setModel(modelo);
-         }catch(SQLException ex){
-             JOptionPane.showMessageDialog(null, "Error de Busqueda" + ex.getMessage());
-         }
+     */
+    public void filtrarDatosInventario(String valor) {
+        Connection con = getConnection();
+        String[] titulos = {"Nombre", "Marca", "Precio", "Costo", "Presentación", "Cantidad"};
+        String[] registros = new String[6];
+        DefaultTableModel modelo = new DefaultTableModel(null, titulos);
+        String sql = "select * from productos where nombreProducto like '%" + valor + "%' ";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                registros[0] = rs.getString("nombreProducto");
+                registros[1] = rs.getString("marcaProducto");
+                registros[2] = rs.getString("precioProducto");
+                registros[3] = rs.getString("costoProducto");
+                registros[4] = rs.getString("presentacion");
+                registros[5] = rs.getString("cantidad");
+                modelo.addRow(registros);
+            }
+            tablaMenuInventario.setModel(modelo);
+            con.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error de Busqueda" + ex.getMessage());
+        }
     }
+
     /*
     * fin del metodo
-    */
-    
-    
-    /*
+     */
+
+ /*
     * Este metodo realiza la busqueda filtrada en la ventana de ventas
-    */
-        
-    public void filtrarDatosVenta(String valor){
-        String[] titulos = {"Nombre","Marca","Precio", "Presentación"};
-         String[] registros = new String[4];
-         DefaultTableModel modelo = new DefaultTableModel(null, titulos);
-         String sql = "select * from productos where nombreProducto like '%"+valor+"%' ";
-         try{
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery();
-             while(rs.next()){
-                 registros[0] = rs.getString("nombreProducto");
-                 registros[1] = rs.getString("marcaProducto");
-                 registros[2] = rs.getString("precioProducto");
-                 registros[3] = rs.getString("presentacion");
-                 modelo.addRow(registros);
-             }
-             tablaBusqueda.setModel(modelo);
-         }catch(SQLException ex){
-             JOptionPane.showMessageDialog(null, "Error de Busqueda" + ex.getMessage());
-         }
+     */
+    public void filtrarDatosVenta(String valor) {
+        Connection con = getConnection();
+        String[] titulos = {"Nombre", "Marca", "Precio", "Presentación"};
+        String[] registros = new String[4];
+        DefaultTableModel modelo = new DefaultTableModel(null, titulos);
+        String sql = "select * from productos where nombreProducto like '%" + valor + "%' ";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                registros[0] = rs.getString("nombreProducto");
+                registros[1] = rs.getString("marcaProducto");
+                registros[2] = rs.getString("precioProducto");
+                registros[3] = rs.getString("presentacion");
+                modelo.addRow(registros);
+            }
+            tablaBusqueda.setModel(modelo);
+            con.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error de Busqueda" + ex.getMessage());
+        }
     }
-    
+
     /*
     * fin del metodo
-    */
-        
-    
-        
+     */
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1355,179 +1358,211 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private void campoBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoBusquedaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoBusquedaActionPerformed
-/*                      ***************************************************************************************************
+    /*                      ***************************************************************************************************
 
 * Botón que llama al metodo y realiza una busqueda filtrada       *********************************************************
 
                         ***************************************************************************************************
-*/
+     */
     private void campoBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBusquedaKeyPressed
         filtrarDatosVenta(campoBusqueda.getText());
     }//GEN-LAST:event_campoBusquedaKeyPressed
-/*                      ***************************************************************************************************
+    /*                      ***************************************************************************************************
 
 * Botón de agregar producto       *****************************************************************************************
 
                         ***************************************************************************************************
-*/
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int fsel = tablaBusqueda.getSelectedRow();
         String nombre, precio, cantidad, subtotal;
         DefaultTableModel modelo2;
-        try{
-            if(fsel == -1){
+        try {
+            if (fsel == -1) {
                 JOptionPane.showMessageDialog(null, "selecciona un producto");
-            }else{
-                 nombre = tablaBusqueda.getValueAt(fsel, 0).toString();
-                 precio = tablaBusqueda.getValueAt(fsel, 2).toString();
-                 cantidad = cant.getText();
-                 if(cantidad.equals("")){
-                JOptionPane.showMessageDialog(null, "no has ingresado una cantidad");
+            } else {
+                nombre = tablaBusqueda.getValueAt(fsel, 0).toString();
+                precio = tablaBusqueda.getValueAt(fsel, 2).toString();
+                cantidad = cant.getText();
+                if (cantidad.equals("")) {
+                    JOptionPane.showMessageDialog(null, "no has ingresado una cantidad");
+                }
+                float x = Float.parseFloat(precio) * Float.parseFloat(cantidad);
+                subtotal = String.valueOf(x);
+                modelo2 = (DefaultTableModel) tablaVentas.getModel();
+                String filaElemento[] = {nombre, precio, cantidad, subtotal};
+                modelo2.addRow(filaElemento);
+                calcularTotal();
             }
-            float x = Float.parseFloat(precio) * Float.parseFloat(cantidad);
-            subtotal = String.valueOf(x);
-            modelo2 = (DefaultTableModel) tablaVentas.getModel();
-            String filaElemento[] = {nombre, precio, cantidad, subtotal};
-            modelo2.addRow(filaElemento);
-            calcularTotal();
-            }
-        }catch(Exception ex){
+        } catch (Exception ex) {
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-/*                      ***************************************************************************************************
+    /*                      ***************************************************************************************************
 
 * Botón de eliminar elemento       ****************************************************************************************
 
                         ***************************************************************************************************
-*/
+     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int elem = tablaVentas.getSelectedRow();
-        if(elem >= 0){
+        if (elem >= 0) {
             modelo.removeRow(elem);
             calcularTotal();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Selecciona una fila");
         }
     }//GEN-LAST:event_jButton4ActionPerformed
-/*                      ***************************************************************************************************
+    /*                      ***************************************************************************************************
 
 * Botón de Pagar        ***************************************************************************************************
 
                         ***************************************************************************************************
-*/                  
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String ingreso = JOptionPane.showInputDialog(null, "Ingresa el monto");
-        float monto = Float.parseFloat(ingreso);
-        float total = calcularTotal();
-        if(monto < total){
-            JOptionPane.showMessageDialog(null, "el monto es inferior al total");
-        }else{
-        Connection con = getConnection();
-        PreparedStatement ps;
-        ResultSet rs;
-        String sql = "SELECT * FROM productos WHERE nombreProducto = ?";
-        int FilaActual = 0, TotalFilas = tablaVentas.getRowCount(), resultado = 0;
-        for(int a = 1; a <= TotalFilas; a++){
-            try{
-                String valorFilaStr = tablaVentas.getValueAt(FilaActual, 0).toString();
-                String valorFilaStr2 = tablaVentas.getValueAt(FilaActual, 2).toString();
-                int valorFilaIn = Integer.parseInt(valorFilaStr2);
-                ps = con.prepareStatement(sql);
-                ps.setString(1, valorFilaStr);
-                rs = ps.executeQuery();
-                FilaActual++;
-                while(rs.next()){
-                    int cant = rs.getInt("cantidad");
-                    resultado = cant - valorFilaIn;  
-                }
-                if(resultado < 0){
-                    JOptionPane.showMessageDialog(null, "Error, no puede haber negativos en el inventario \n verifica las existencias");
-                }else{
-                    try{
-                        String sql1= "UPDATE productos SET cantidad =  ? WHERE nombreProducto = ? ";
-                        ps = con.prepareStatement(sql1);
-                        ps.setInt(1, resultado);
-                        ps.setString(2, valorFilaStr);
-                        ps.executeUpdate();
-                        JOptionPane.showMessageDialog(null, "compra realizada");
-                    }catch(SQLException ex){
+        int numFilas = tablaVentas.getRowCount();
+        int fila = 0;
+        if (numFilas <= 0) {
+            JOptionPane.showMessageDialog(null, "no hay productos en la lista");
+        } else {
+            String ingreso = JOptionPane.showInputDialog(null, "Ingresa el monto");
+            float monto = Float.parseFloat(ingreso);
+            float total = calcularTotal();
+            if (monto < total) {
+                JOptionPane.showMessageDialog(null, "el monto es inferior al total");
+            } else {
+                PreparedStatement ps;
+                ResultSet rs;
+                String sql = "SELECT * FROM productos WHERE nombreProducto = ?";
+                int FilaActual = 0, TotalFilas = tablaVentas.getRowCount(), resultado = 0;
+                for (int a = 1; a <= TotalFilas; a++) {
+                    try {
+                        Connection con = getConnection();
+                        String valorFilaStr = tablaVentas.getValueAt(FilaActual, 0).toString();
+                        String valorFilaStr2 = tablaVentas.getValueAt(FilaActual, 2).toString();
+                        int valorFilaIn = Integer.parseInt(valorFilaStr2);
+                        ps = con.prepareStatement(sql);
+                        ps.setString(1, valorFilaStr);
+                        rs = ps.executeQuery();
+                        FilaActual++;
+                        while (rs.next()) {
+                            int cant = rs.getInt("cantidad");
+                            resultado = cant - valorFilaIn;
+                        }
+                        if (resultado < 0) {
+                            JOptionPane.showMessageDialog(null, "Error, no puede haber negativos en el inventario \n verifica las existencias");
+                        } else {
+                            try {
+                                String sql1 = "UPDATE productos SET cantidad =  ? WHERE nombreProducto = ? ";
+                                ps = con.prepareStatement(sql1);
+                                ps.setInt(1, resultado);
+                                ps.setString(2, valorFilaStr);
+                                ps.executeUpdate();
+                                con.close();
+                            } catch (SQLException ex) {
+                                JOptionPane.showMessageDialog(null, ex);
+                            }
+                        }
+                    } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(null, ex);
                     }
                 }
-            }catch(SQLException ex){
-                JOptionPane.showMessageDialog(null, ex);
-            }     
-        }
+                for (int i = 0; i < numFilas; i++) {
+                    try {
+                        Connection con = getConnection();
+                        String sql2 = "INSERT INTO ventas (nombreProducto, precioProducto, cantidad, subtotal) values(?,?,?,?)";
+                        String nombreProduc = tablaVentas.getValueAt(fila, 0).toString();
+                        String valorFilaVenPrec = tablaVentas.getValueAt(fila, 1).toString();
+                        String valorFilaVenCant = tablaVentas.getValueAt(fila, 2).toString();
+                        String valorFilaVenSubt = tablaVentas.getValueAt(fila, 3).toString();
+                        float Prec = Float.parseFloat(valorFilaVenPrec);
+                        int Cant = Integer.parseInt(valorFilaVenCant);
+                        float Sub = Float.parseFloat(valorFilaVenSubt);
+                        ps = con.prepareStatement(sql2);
+                        ps.setString(1, nombreProduc);
+                        ps.setFloat(2, Prec);
+                        ps.setInt(3, Cant);
+                        ps.setFloat(4, Sub);
+                        ps.executeUpdate();
+                        con.close();
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, ex);
+                    }
+                    fila++;
+                }
+            }
+            JOptionPane.showMessageDialog(null, "compra realizada");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    
-/*                      ***************************************************************************************************
+    /*                      ***************************************************************************************************
 
 * Botón de llamada a una nueva ventana      *******************************************************************************
 
                         ***************************************************************************************************
-*/
+     */
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         MenuAltaInventario ventana = new MenuAltaInventario();
         ventana.setVisible(true);
 
     }//GEN-LAST:event_jButton5ActionPerformed
-/*                      ***************************************************************************************************
+    /*                      ***************************************************************************************************
 
 * Botón que llama al metodo y realiza una busqueda filtrada       *********************************************************
 
                         ***************************************************************************************************
-*/
+     */
     private void busquedaInventarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_busquedaInventarioKeyPressed
         filtrarDatosInventario(busquedaInventario.getText());
     }//GEN-LAST:event_busquedaInventarioKeyPressed
-/*                      ***************************************************************************************************
+    /*                      ***************************************************************************************************
 
 * Botón de llamada a una nueva ventana      *******************************************************************************
 
                         ***************************************************************************************************
-*/
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         PagoCredito ventana = new PagoCredito();
         ventana.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
-/*                      ***************************************************************************************************
+    /*                      ***************************************************************************************************
 
 * Botón de edición de producto     ****************************************************************************************
 
                         ***************************************************************************************************
-*/
+     */
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         int fila = tablaMenuInventario.getSelectedRow();
-        if(fila == -1){
+        if (fila == -1) {
             JOptionPane.showMessageDialog(null, "no has seleccionado ningun producto");
-        }else{
+        } else {
             nomprod.setText(tablaMenuInventario.getValueAt(fila, 0).toString());
             marcprodu.setText(tablaMenuInventario.getValueAt(fila, 1).toString());
             precprod.setText(tablaMenuInventario.getValueAt(fila, 2).toString());
             costprod.setText(tablaMenuInventario.getValueAt(fila, 3).toString());
-            
+
             cantcamp.setText(tablaMenuInventario.getValueAt(fila, 5).toString());
         }
     }//GEN-LAST:event_jButton7ActionPerformed
-/*                      ***************************************************************************************************
+    /*                      ***************************************************************************************************
 
 * Botón que elimina un producto      **************************************************************************************
 
                         ***************************************************************************************************
-*/
+     */
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        Connection con = getConnection();
         int fila = tablaMenuInventario.getSelectedRow();
         String valor = tablaMenuInventario.getValueAt(fila, 0).toString();
-        if(fila>= 0){
-            try{
-                PreparedStatement ps = con.prepareStatement("DELETE FROM productos WHERE nombreProducto ='"+ valor +"'");
+        if (fila >= 0) {
+            try {
+                PreparedStatement ps = con.prepareStatement("DELETE FROM productos WHERE nombreProducto ='" + valor + "'");
                 ps.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Dato eliminado");
                 mostrarTablaInventario();
-            }catch(SQLException e){
+                con.close();
+
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
@@ -1536,22 +1571,24 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private void campBusUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campBusUsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campBusUsActionPerformed
-/*                      ***************************************************************************************************
+    /*                      ***************************************************************************************************
 
 * Botón que elimina un usuario      ***************************************************************************************
 
                         ***************************************************************************************************
-*/
+     */
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        Connection con = getConnection();
         int fila = TablaUsuarios.getSelectedRow();
         String valor = TablaUsuarios.getValueAt(fila, 0).toString();
-        if(fila>= 0){
-            try{
-                PreparedStatement ps = con.prepareStatement("DELETE FROM usuarios WHERE nombreUsuario ='"+ valor +"'");
+        if (fila >= 0) {
+            try {
+                PreparedStatement ps = con.prepareStatement("DELETE FROM usuarios WHERE nombreUsuario ='" + valor + "'");
                 ps.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Dato eliminado");
                 mostrarTablaUsuarios();
-            }catch(SQLException e){
+                con.close();
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
@@ -1567,16 +1604,16 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         Connection con = getConnection();
         PreparedStatement ps;
         String sql = "UPDATE usuarios SET nombreUsuario = ?, contraseña = ?, nivelPrivilegio = ? WHERE nombreUsuario = ?";
-        if(usuarioSeleccionado.equals("")){
+        if (usuarioSeleccionado.equals("")) {
             JOptionPane.showMessageDialog(null, "Selecciona un usuario");
         }
-        if(camNombUsEd.getText().isEmpty() || campConUsEd.getText().isEmpty() || campConUsEdRe.getText().isEmpty()){
+        if (camNombUsEd.getText().isEmpty() || campConUsEd.getText().isEmpty() || campConUsEdRe.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "algunos campos están vacíos");
         }
-        if(!nuevaContraUsuario.equals(nuevaContra2)){
+        if (!nuevaContraUsuario.equals(nuevaContra2)) {
             JOptionPane.showMessageDialog(null, "las contraseñas son diferentes");
-        }else{
-            try{
+        } else {
+            try {
                 ps = con.prepareStatement(sql);
                 ps.setString(1, nuevoNomUsuario);
                 ps.setString(2, nuevaContraUsuario);
@@ -1589,17 +1626,18 @@ public class PrincipalAdmin extends javax.swing.JFrame {
                 camNombUsEd.setText(null);
                 campConUsEd.setText(null);
                 campConUsEdRe.setText(null);
-            }catch(SQLException ex){
+                con.close();
+            } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
         }
     }//GEN-LAST:event_jButton11ActionPerformed
-/*                      ***************************************************************************************************
+    /*                      ***************************************************************************************************
 
 * Botón que llama al metodo y realiza una busqueda filtrada       *********************************************************
 
                         ***************************************************************************************************
-*/
+     */
     private void campBusUsKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campBusUsKeyPressed
         filtrarDatosUsuarios(campBusUs.getText());
     }//GEN-LAST:event_campBusUsKeyPressed
@@ -1609,12 +1647,12 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         inicio.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton10ActionPerformed
-/*                      ***************************************************************************************************
+    /*                      ***************************************************************************************************
 
 * Botón que crea un usuario con los datos del formulario      *************************************************************
 
                         ***************************************************************************************************
-*/
+     */
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         String nombreUsuario, contraUsuario, contraUsuario2, nivelPrivilegio, sql;
         nombreUsuario = campNomUs.getText();
@@ -1624,12 +1662,13 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         PreparedStatement ps;
         Connection con = getConnection();
         sql = "insert into usuarios (nombreUsuario, contraseña, nivelPrivilegio) values(?,?,?)";
-        if(campNomUs.getText().isEmpty() || campConUs.getText().isEmpty() || campReus.getText().isEmpty() || nivelPrivilegio.equals("selecciona")){
+        if (campNomUs.getText().isEmpty() || campConUs.getText().isEmpty() || campReus.getText().isEmpty() || nivelPrivilegio.equals("selecciona")) {
             JOptionPane.showMessageDialog(null, "algunos campos estan vacios");
-        }if(!contraUsuario.equals(contraUsuario2)){
+        }
+        if (!contraUsuario.equals(contraUsuario2)) {
             JOptionPane.showMessageDialog(null, "las contraseñas no son iguales");
-        }else{
-            try{
+        } else {
+            try {
                 ps = con.prepareStatement(sql);
                 ps.setString(1, nombreUsuario);
                 ps.setString(2, contraUsuario);
@@ -1641,7 +1680,8 @@ public class PrincipalAdmin extends javax.swing.JFrame {
                 campReus.setText(null);
                 mostrarTablaUsuarios();
                 llenarCombo(comboUsuarios, 1);
-            }catch(SQLException ex){
+                con.close();
+            } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
         }
@@ -1650,52 +1690,53 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         Connection con = getConnection();
         int fila = tablaMenuInventario.getSelectedRow();
-        if(fila == -1){
+        if (fila == -1) {
             JOptionPane.showMessageDialog(null, "no hay ningun elemento");
-        }else{
-        if(nomprod.getText().isEmpty() || marcprodu.getText().isEmpty() || precprod.getText().isEmpty()|| 
-                costprod.getText().isEmpty()|| prescampo.getText().isEmpty() || combopres.equals("selecciona") || 
-                        cantcamp.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "algunos campos están vacíos");  
-        }else{
-        PreparedStatement ps;
-        String valor = tablaMenuInventario.getValueAt(fila, 0).toString();
-        String nombprod = nomprod.getText().toUpperCase();
-        String marcprod = marcprodu.getText().toUpperCase();
-        String preprod = precprod.getText();
-        float precioprod = Float.parseFloat(preprod);
-        String cosprod = costprod.getText();
-        float costoprod = Float.parseFloat(cosprod);
-        String pres = prescampo.getText() + combopres.getSelectedItem().toString();
-        String cant = cantcamp.getText();
-        int cantidad = Integer.parseInt(cant);
-        try{
-                String sql = "UPDATE productos SET nombreProducto = ?, marcaProducto = ?, precioProducto = ?, costoProducto = ?, presentacion = ?, cantidad = ? WHERE nombreProducto = '" + valor + "'";
-                ps = con.prepareStatement(sql);
-                ps.setString(1, nombprod);
-                ps.setString(2, marcprod);
-                ps.setFloat(3, precioprod);
-                ps.setFloat(4, costoprod);
-                ps.setString(5, pres);
-                ps.setInt(6, cantidad);
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "datos actualizados");
-                mostrarTablaInventario();
-                nomprod.setText(null);
-                marcprodu.setText(null);
-                precprod.setText(null);
-                costprod.setText(null);
-                prescampo.setText(null);
-                cantcamp.setText(null);
-            }catch(SQLException sqex){
-                JOptionPane.showMessageDialog(null, "error" + sqex);
-            }   
-        }           
+        } else {
+            if (nomprod.getText().isEmpty() || marcprodu.getText().isEmpty() || precprod.getText().isEmpty()
+                    || costprod.getText().isEmpty() || prescampo.getText().isEmpty() || combopres.equals("selecciona")
+                    || cantcamp.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "algunos campos están vacíos");
+            } else {
+                PreparedStatement ps;
+                String valor = tablaMenuInventario.getValueAt(fila, 0).toString();
+                String nombprod = nomprod.getText().toUpperCase();
+                String marcprod = marcprodu.getText().toUpperCase();
+                String preprod = precprod.getText();
+                float precioprod = Float.parseFloat(preprod);
+                String cosprod = costprod.getText();
+                float costoprod = Float.parseFloat(cosprod);
+                String pres = prescampo.getText() + combopres.getSelectedItem().toString();
+                String cant = cantcamp.getText();
+                int cantidad = Integer.parseInt(cant);
+                try {
+                    String sql = "UPDATE productos SET nombreProducto = ?, marcaProducto = ?, precioProducto = ?, costoProducto = ?, presentacion = ?, cantidad = ? WHERE nombreProducto = '" + valor + "'";
+                    ps = con.prepareStatement(sql);
+                    ps.setString(1, nombprod);
+                    ps.setString(2, marcprod);
+                    ps.setFloat(3, precioprod);
+                    ps.setFloat(4, costoprod);
+                    ps.setString(5, pres);
+                    ps.setInt(6, cantidad);
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "datos actualizados");
+                    mostrarTablaInventario();
+                    nomprod.setText(null);
+                    marcprodu.setText(null);
+                    precprod.setText(null);
+                    costprod.setText(null);
+                    prescampo.setText(null);
+                    cantcamp.setText(null);
+                    con.close();
+                } catch (SQLException sqex) {
+                    JOptionPane.showMessageDialog(null, "error" + sqex);
+                }
+            }
         }
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        
+
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
