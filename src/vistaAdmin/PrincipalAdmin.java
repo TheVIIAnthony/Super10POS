@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vistaAdmin;
 
 import Default.LogIn;
@@ -18,18 +13,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Usuario
- */
 public class PrincipalAdmin extends javax.swing.JFrame {
 
     float Total;
     DefaultTableModel modelo;
-
-    /**
-     * Creates new form PrincipalAdmin
-     */
     public PrincipalAdmin() {
         initComponents();
         modelo = new DefaultTableModel();
@@ -55,10 +42,6 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         validarSoloNumeros(cantcamp);
         validarSoloNumeros(costprod);
     }
-
-    /*
-    * Este metodo sirve para llenar un combobox desde la BD
-     */
     public void llenarCombo(JComboBox cbo, int columna) {
         Connection con = getConnection();
         PreparedStatement ps;
@@ -76,14 +59,6 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-
-    /*
-    * fin del metodo
-     */
-
- /*
-    * Este metodo sirve para la busqueda filtrada de los usuarios
-     */
     public void filtrarDatosUsuarios(String valor) {
         Connection con = getConnection();
         String[] titulos = {"Nombre", "Nivel de Privilegio"};
@@ -104,14 +79,6 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error de Busqueda" + ex.getMessage());
         }
     }
-
-    /*
-    * fin del metodo
-     */
-
- /*
-    * Este metodo sirve para mostrar todos los usuarios actuales al abrir la ventana
-     */
     void mostrarTablaUsuarios() {
         Connection con = getConnection();
         DefaultTableModel modelo = new DefaultTableModel();
@@ -134,14 +101,6 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
         }
     }
-
-    /*
-    * fin del metodo
-     */
-
- /*
-    * Este metodo sirve para que solo se puedan ingresar letras en los campos
-     */
     public void validarSoloLetras(JTextField campo) {
         campo.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
@@ -152,16 +111,9 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             }
         });
     }
-
-    /*
-    * fin del metodo
-     */
-
- /*
-    * Este metodo sirve para que solo se puedan ingresar numeros en los campos
-     */
     public void validarSoloNumeros(JTextField campo) {
         campo.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
                 if (!Character.isDigit(c)) {
@@ -170,14 +122,6 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             }
         });
     }
-
-    /*
-    * fin del metodo
-     */
-
- /*
-    * Este metodo sirve para mostrar todos los productos actuales en el inventario al abrir la ventana
-     */
     void mostrarTablaInventario() {
         Connection con = getConnection();
         DefaultTableModel modelo = new DefaultTableModel();
@@ -209,14 +153,6 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
         }
     }
-
-    /*
-    * fin del metodo
-     */
-
- /*
-    * Este metodo sirve para mostrar todos los productos actuales en el inventario al abrir la ventana
-     */
     public void mostrarTablaVenta() {
         Connection con = getConnection();
         DefaultTableModel modelo2 = new DefaultTableModel();
@@ -244,14 +180,6 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
         }
     }
-
-    /*
-    * fin del metodo
-     */
-
- /*
-    * Este metodo hace un calculo del total actual de los productos en lista y lo muestra
-     */
     public int calcularTotal() {
         float stotal, total = 0;
         if (tablaVentas.getRowCount() > 0) {
@@ -263,26 +191,12 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         }
         return (int) total;
     }
-
-    /*
-    * fin del metodo
-     */
- /*
-    * Este metodo vacia la tabla ventas
-     */
     void vaciarTablaVentas() {
         int filas = tablaVentas.getRowCount();
         for (int i = filas - 1; i >= 0; i--) {
             modelo.removeRow(i);
         }
     }
-
-    /*
-    * fin de metodo
-     */
- /*
-    * Este metodo realiza la busqueda filtrada en la ventana de inventario
-     */
     public void filtrarDatosInventario(String valor) {
         Connection con = getConnection();
         String[] titulos = {"Nombre", "Marca", "Precio", "Costo", "Presentación", "Cantidad"};
@@ -307,14 +221,6 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error de Busqueda" + ex.getMessage());
         }
     }
-
-    /*
-    * fin del metodo
-     */
-
- /*
-    * Este metodo realiza la busqueda filtrada en la ventana de ventas
-     */
     public void filtrarDatosVenta(String valor) {
         Connection con = getConnection();
         String[] titulos = {"Nombre", "Marca", "Precio", "Presentación"};
@@ -337,15 +243,6 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error de Busqueda" + ex.getMessage());
         }
     }
-
-    /*
-    * fin del metodo
-     */
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -370,14 +267,14 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tablaCompras = new javax.swing.JTable();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel32 = new javax.swing.JLabel();
         jButton17 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        tablaProveedores = new javax.swing.JTable();
         jButton18 = new javax.swing.JButton();
         jButton19 = new javax.swing.JButton();
         jButton20 = new javax.swing.JButton();
@@ -395,15 +292,16 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         jButton21 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaDeudores = new javax.swing.JTable();
         jButton13 = new javax.swing.JButton();
         jLabel30 = new javax.swing.JLabel();
         jButton14 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tablaDeudores2 = new javax.swing.JTable();
         jButton16 = new javax.swing.JButton();
-        jPanel10 = new javax.swing.JPanel();
+        jLabel39 = new javax.swing.JLabel();
+        jButton22 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -485,6 +383,11 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel1.setText("Ingresa un producto:");
 
+        tablaBusqueda = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
         tablaBusqueda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -493,8 +396,14 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
             }
         ));
+        tablaBusqueda.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaBusqueda);
 
+        tablaVentas = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
         tablaVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -503,6 +412,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
             }
         ));
+        tablaVentas.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaVentas);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -618,7 +528,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(valorTotal)
                             .addComponent(jButton2)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -627,7 +537,12 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         jLabel31.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel31.setText("Compras recientes");
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tablaCompras = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        tablaCompras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -638,7 +553,8 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane7.setViewportView(jTable3);
+        tablaCompras.getTableHeader().setReorderingAllowed(false);
+        jScrollPane7.setViewportView(tablaCompras);
 
         jLabel32.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel32.setText("Selecciona proveedor:");
@@ -675,7 +591,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel31)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel32)
@@ -689,8 +605,13 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
         jLabel33.setText("Consultar Proveedores");
 
-        jTable4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        tablaProveedores = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        tablaProveedores.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tablaProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -701,7 +622,8 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane8.setViewportView(jTable4);
+        tablaProveedores.getTableHeader().setReorderingAllowed(false);
+        jScrollPane8.setViewportView(tablaProveedores);
 
         jButton18.setText("Altas");
 
@@ -807,21 +729,23 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel33))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(jLabel33))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jButton18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton20)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton19)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton20)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -837,13 +761,18 @@ public class PrincipalAdmin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE))
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Proveedores", jPanel4);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaDeudores = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        tablaDeudores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -854,10 +783,11 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane5.setViewportView(jTable1);
+        tablaDeudores.getTableHeader().setReorderingAllowed(false);
+        jScrollPane5.setViewportView(tablaDeudores);
 
         jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconfinder_Stock Index Up_27881.png"))); // NOI18N
-        jButton13.setText("Menu de Altas");
+        jButton13.setText("Nuevo Deudor");
         jButton13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton13ActionPerformed(evt);
@@ -865,7 +795,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         });
 
         jLabel30.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel30.setText("Lista de deudores");
+        jLabel30.setText("Lista de deudores:");
 
         jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconfinder_Remove_27874.png"))); // NOI18N
         jButton14.setText("Eliminar Deudor");
@@ -883,7 +813,12 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tablaDeudores2 = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        tablaDeudores2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -894,23 +829,22 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane6.setViewportView(jTable2);
+        tablaDeudores2.getTableHeader().setReorderingAllowed(false);
+        jScrollPane6.setViewportView(tablaDeudores2);
 
         jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconfinder_Search_27877.png"))); // NOI18N
-        jButton16.setText("Consultar deuda:");
+        jButton16.setText("Consultar:");
 
-        jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel39.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel39.setText("Lista de Productos:");
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 436, Short.MAX_VALUE)
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 204, Short.MAX_VALUE)
-        );
+        jButton22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconfinder_Add_27831.png"))); // NOI18N
+        jButton22.setText("Nuevo Crédito");
+        jButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton22ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -919,40 +853,53 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel30)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton16, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                            .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel30))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel39)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61)
+                        .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGap(276, 276, 276)
+                        .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65)
+                        .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel30)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel30)
+                            .addComponent(jLabel39)
+                            .addComponent(jButton16)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton13, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(jButton16)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton13)
-                            .addGap(18, 18, 18)
+                    .addComponent(jScrollPane5)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 6, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton14)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton15)))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton15))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -961,6 +908,11 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel4.setText("Menu del Inventario");
 
+        tablaMenuInventario = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
         tablaMenuInventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -972,6 +924,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
             }
         ));
+        tablaMenuInventario.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tablaMenuInventario);
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -1204,11 +1157,16 @@ public class PrincipalAdmin extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addGap(28, 28, 28)
                 .addComponent(jLabel7)
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addContainerGap(158, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Registros", jPanel7);
 
+        TablaUsuarios = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
         TablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -1220,6 +1178,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
             }
         ));
+        TablaUsuarios.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(TablaUsuarios);
 
         jLabel9.setText("Buscar:");
@@ -1477,7 +1436,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(jButton8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1519,21 +1478,11 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private void campoBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoBusquedaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoBusquedaActionPerformed
-    /*                      ***************************************************************************************************
 
-* Botón que llama al metodo y realiza una busqueda filtrada       *********************************************************
-
-                        ***************************************************************************************************
-     */
     private void campoBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBusquedaKeyPressed
         filtrarDatosVenta(campoBusqueda.getText());
     }//GEN-LAST:event_campoBusquedaKeyPressed
-    /*                      ***************************************************************************************************
 
-* Botón de agregar producto       *****************************************************************************************
-
-                        ***************************************************************************************************
-     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int fsel = tablaBusqueda.getSelectedRow();
         String nombre, precio, cantidad, subtotal;
@@ -1559,12 +1508,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-    /*                      ***************************************************************************************************
 
-* Botón de eliminar elemento       ****************************************************************************************
-
-                        ***************************************************************************************************
-     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int elem = tablaVentas.getSelectedRow();
         if (elem >= 0) {
@@ -1574,12 +1518,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecciona una fila");
         }
     }//GEN-LAST:event_jButton4ActionPerformed
-    /*                      ***************************************************************************************************
 
-* Botón de Pagar        ***************************************************************************************************
-
-                        ***************************************************************************************************
-     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int numFilas = tablaVentas.getRowCount();
         int fila = 0;
@@ -1656,42 +1595,21 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    /*                      ***************************************************************************************************
-
-* Botón de llamada a una nueva ventana      *******************************************************************************
-
-                        ***************************************************************************************************
-     */
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         MenuAltaInventario ventana = new MenuAltaInventario();
         ventana.setVisible(true);
 
     }//GEN-LAST:event_jButton5ActionPerformed
-    /*                      ***************************************************************************************************
 
-* Botón que llama al metodo y realiza una busqueda filtrada       *********************************************************
-
-                        ***************************************************************************************************
-     */
     private void busquedaInventarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_busquedaInventarioKeyPressed
         filtrarDatosInventario(busquedaInventario.getText());
     }//GEN-LAST:event_busquedaInventarioKeyPressed
-    /*                      ***************************************************************************************************
 
-* Botón de llamada a una nueva ventana      *******************************************************************************
-
-                        ***************************************************************************************************
-     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         PagoCredito ventana = new PagoCredito();
         ventana.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
-    /*                      ***************************************************************************************************
 
-* Botón de edición de producto     ****************************************************************************************
-
-                        ***************************************************************************************************
-     */
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         int fila = tablaMenuInventario.getSelectedRow();
         if (fila == -1) {
@@ -1705,12 +1623,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             cantcamp.setText(tablaMenuInventario.getValueAt(fila, 5).toString());
         }
     }//GEN-LAST:event_jButton7ActionPerformed
-    /*                      ***************************************************************************************************
 
-* Botón que elimina un producto      **************************************************************************************
-
-                        ***************************************************************************************************
-     */
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         Connection con = getConnection();
         int fila = tablaMenuInventario.getSelectedRow();
@@ -1732,12 +1645,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private void campBusUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campBusUsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campBusUsActionPerformed
-    /*                      ***************************************************************************************************
 
-* Botón que elimina un usuario      ***************************************************************************************
-
-                        ***************************************************************************************************
-     */
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         Connection con = getConnection();
         int fila = TablaUsuarios.getSelectedRow();
@@ -1793,12 +1701,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton11ActionPerformed
-    /*                      ***************************************************************************************************
 
-* Botón que llama al metodo y realiza una busqueda filtrada       *********************************************************
-
-                        ***************************************************************************************************
-     */
     private void campBusUsKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campBusUsKeyPressed
         filtrarDatosUsuarios(campBusUs.getText());
     }//GEN-LAST:event_campBusUsKeyPressed
@@ -1808,12 +1711,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         inicio.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton10ActionPerformed
-    /*                      ***************************************************************************************************
 
-* Botón que crea un usuario con los datos del formulario      *************************************************************
-
-                        ***************************************************************************************************
-     */
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         String nombreUsuario, contraUsuario, contraUsuario2, nivelPrivilegio, sql;
         nombreUsuario = campNomUs.getText();
@@ -1897,7 +1795,8 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-
+        MenuAltaDeudores ventana = new MenuAltaDeudores();
+        ventana.setVisible(true);
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
@@ -1920,6 +1819,11 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+        NuevoCredito ventana = new NuevoCredito();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jButton22ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1987,6 +1891,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -2029,6 +1934,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -2036,7 +1942,6 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
@@ -2056,10 +1961,6 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
@@ -2069,7 +1970,11 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JTextField precprod;
     private javax.swing.JTextField prescampo;
     private javax.swing.JTable tablaBusqueda;
+    private javax.swing.JTable tablaCompras;
+    private javax.swing.JTable tablaDeudores;
+    private javax.swing.JTable tablaDeudores2;
     private javax.swing.JTable tablaMenuInventario;
+    private javax.swing.JTable tablaProveedores;
     private javax.swing.JTable tablaVentas;
     private javax.swing.JLabel valorTotal;
     // End of variables declaration//GEN-END:variables
